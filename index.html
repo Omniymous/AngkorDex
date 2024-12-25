@@ -2,7 +2,7 @@
 <head>
 <base href="/">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>AngkorDEX - Decentralized Exchange Analytics</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -386,11 +386,11 @@ const updateTicker = async () => {
     const tickerHTML = tickerData.map(token => {
       const tokenData = allTokens.find(t => t.symbol.toUpperCase() === token.symbol);
       return `
-        <div class="ticker-item">
-          <img src="${tokenData ? tokenData.image : ''}" alt="${token.symbol}">
-          <span>${token.symbol}</span>
-          <span>$${token.price.toLocaleString()}</span>
-          <span class="${token.change > 0 ? 'green' : 'red'}">
+        <div class="ticker-item" style="min-width: fit-content">
+          <img src="${tokenData ? tokenData.image : ''}" alt="${token.symbol}" loading="lazy">
+          <span style="white-space: nowrap">${token.symbol}</span>
+          <span style="white-space: nowrap">$${token.price.toLocaleString()}</span>
+          <span class="${token.change > 0 ? 'green' : 'red'}" style="white-space: nowrap">
             ${token.change > 0 ? '↑' : '↓'}${Math.abs(token.change).toFixed(2)}%
           </span>
         </div>
@@ -416,21 +416,17 @@ const createTokenRow = (tokenData, index) => {
       <div class="token-cell">${(currentPage - 1) * tokensPerPage + index + 1}</div>
       <div class="token-cell">
         <div class="token-info">
-          <img class="token-logo" src="${tokenData.image}" alt="${tokenData.symbol}">
-          <span>${tokenData.symbol.toUpperCase()}/USD</span>
+          <img class="token-logo" src="${tokenData.image}" alt="${tokenData.symbol}" loading="lazy">
+          <span style="white-space: nowrap">${tokenData.symbol.toUpperCase()}</span>
         </div>
       </div>
-      <div class="token-cell">$${tokenData.current_price.toLocaleString()}</div>
-      <div class="token-cell ${tokenData.price_change_percentage_24h > 0 ? 'green' : 'red'}">
+      <div class="token-cell" style="white-space: nowrap">$${tokenData.current_price.toLocaleString()}</div>
+      <div class="token-cell ${tokenData.price_change_percentage_24h > 0 ? 'green' : 'red'}" style="white-space: nowrap">
         ${tokenData.price_change_percentage_24h.toFixed(2)}%
       </div>
-      <div class="token-cell">$${(tokenData.total_volume / 1000000).toFixed(2)}M</div>
-      <div class="token-cell">$${(tokenData.market_cap / 1000000).toFixed(2)}M</div>
-      <div class="token-cell">
-        <div class="trade-buttons" onclick="event.stopPropagation()">
-          <button class="buy-btn" onclick="openTradeModal('buy', '${tokenData.symbol}', ${tokenData.current_price})">Buy</button>
-          <button class="sell-btn" onclick="openTradeModal('sell', '${tokenData.symbol}', ${tokenData.current_price})">Sell</button>
-        </div>
+      <div class="token-cell trade-buttons" onclick="event.stopPropagation()">
+        <button class="buy-btn" onclick="openTradeModal('buy', '${tokenData.symbol}', ${tokenData.current_price})">Buy</button>
+        <button class="sell-btn" onclick="openTradeModal('sell', '${tokenData.symbol}', ${tokenData.current_price})">Sell</button>
       </div>
     </div>
   `;
@@ -453,8 +449,6 @@ const loadTokenPage = async () => {
           <div class="token-cell">Token</div>
           <div class="token-cell">Price</div>
           <div class="token-cell">24h Change</div>
-          <div class="token-cell">Volume</div>
-          <div class="token-cell">Market Cap</div>
           <div class="token-cell">Trade</div>
         </div>
         ${pageTokens.map((token, idx) => createTokenRow(token, idx)).join('')}
@@ -821,7 +815,11 @@ const openChartModal = async (coinId, symbol) => {
               color: 'rgba(255,255,255,0.1)'
             },
             ticks: {
-              color: '#fff'
+              color: '#fff',
+              maxRotation: 45,
+              minRotation: 45,
+              autoSkip: true,
+              maxTicksLimit: window.innerWidth < 480 ? 6 : 12
             }
           },
           y: {
