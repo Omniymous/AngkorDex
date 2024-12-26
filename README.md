@@ -2,6 +2,6 @@
 - Fixed Horizontal Overflow
 - Adjusted Warning
 - Powered by Coingecko API 
-- Mobile Compatability
+- Mobile Compatability (Adjusted Overscrolling)
 
 https://omniymous.github.io/AngkorDex/
