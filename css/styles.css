@@ -20,6 +20,7 @@ body {
   color: var(--text);
   overflow-x: hidden;
   overscroll-behavior: none;
+  overflow: hidden;
   width: 100%;
 }
 
