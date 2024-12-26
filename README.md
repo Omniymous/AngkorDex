@@ -3,5 +3,6 @@
 - Adjusted Warning
 - Powered by Coingecko API 
 - Mobile Compatability (Adjusted Overscrolling)
+- Footer
 
 https://omniymous.github.io/AngkorDex/
