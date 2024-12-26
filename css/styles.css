@@ -19,7 +19,7 @@ body {
   background: var(--dark-bg);
   color: var(--text);
   overflow-x: hidden;
-  overflow: hidden;
+  overscroll-behavior: none;
   width: 100%;
 }
 
