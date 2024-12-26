@@ -990,6 +990,7 @@ body {
 @media (max-width: 768px) {
   .sticky-disclaimer {
     max-width: 90%; /* Allow more space for mobile screens */
+    margin-top: 10rem; /*Adjust margin for mobile*/
     padding: 1rem; /* Adjust padding for mobile */
   }
 
