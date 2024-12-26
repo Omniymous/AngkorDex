@@ -18,7 +18,9 @@
 body {
   background: var(--dark-bg);
   color: var(--text);
+  overflow-x: hidden;
   width: 100%;
+  margin: 0;
 }
 
 .navbar {
