@@ -1053,6 +1053,63 @@ body {
   }
 }
 
+/* Footer Style */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(45deg, #ff4757, #ff6b81); /* Gradient background */
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 1rem;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 1px;
+  z-index: 1000;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect for depth */
+}
+
+/* Highlight "Omniymous" */
+.footer .highlight {
+  font-weight: bold;
+  color: #fffa65; /* Gold color for emphasis */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect on the highlighted text */
+.footer .highlight:hover {
+  color: #f0a500; /* Darker gold on hover */
+  cursor: pointer;
+}
+
+/* Add a slight animation to the text */
+.footer p {
+  animation: fadeIn 1s ease-out;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    font-size: 0.9rem; /* Slightly smaller font on smaller screens */
+    padding: 0.8rem 0;
+  }
+}
+
 .ticker:hover {
   animation-play-state: paused;
 }
