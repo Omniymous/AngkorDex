@@ -159,169 +159,129 @@ body {
 }
 
 .token-list {
-  display: table;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 0.8rem;
-  margin-top: 1rem;
+  display: block;
 }
 
 .token-row {
-  display: table-row;
-  transition: all 0.3s ease;
-  background: linear-gradient(45deg, rgba(0, 184, 148, 0.05) 0%, rgba(0, 184, 148, 0.02) 100%);
+  background: linear-gradient(45deg, rgba(0, 184, 148, 0.05), rgba(127, 0, 255, 0.05));
   border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-}
-
-.token-row:hover {
-  background: rgba(0, 184, 148, 0.1);
-  transform: translateX(8px);
-  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.15);
+  border: 1px solid transparent;
 }
 
 .token-row::before {
-  content: '';
+  content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 4px;
-  background: var(--secondary);
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    #00f3ff 0deg,
+    #7f00ff 180deg,
+    #00f3ff 360deg  
+  );
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease-in-out;
+  z-index: -1;
+  animation: rotateGradient 5s linear infinite;
+}
+
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.token-row:hover {
+  transform: translateY(-4px);
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-purple);
 }
 
 .token-row:hover::before {
-  opacity: 1;
+  opacity: 0.6;
+  filter: blur(20px);
 }
 
-.token-cell {
-  display: table-cell;
-  padding: 1.2rem 1rem;
-  vertical-align: middle;
-  position: relative;
+.token-cell.token-price,
+.token-cell .change {
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: -webkit-linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.token-info {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-}
-
-.token-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  border: 2px solid var(--secondary);
-  padding: 2px;
-  background: rgba(0, 0, 0, 0.2);
+.token-volume,
+.token-mcap {
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0.8;
   transition: all 0.3s ease;
 }
 
-.token-row:hover .token-logo {
-  transform: scale(1.1);
-  box-shadow: 0 0 15px rgba(0, 184, 148, 0.3);
+.token-row:hover .token-volume,
+.token-row:hover .token-mcap {
+  color: var(--neon-blue);
+  opacity: 1;
 }
 
-.token-name {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text);
-  margin-bottom: 0.2rem;
+.token-row:hover .token-cell.token-price,
+.token-row:hover .token-cell .change {
+  animation: glowText 2s linear infinite;
 }
 
-.token-symbol {
-  font-size: 0.9rem;
-  color: var(--secondary);
-  opacity: 0.8;
+@keyframes glowText {
+  0% {
+    text-shadow: 0 0 5px var(--neon-blue);
+  }
+  50% {
+    text-shadow: 0 0 20px var(--neon-purple);
+  }
+  100% {
+    text-shadow: 0 0 5px var(--neon-blue);
+  }
 }
 
-.token-cell.token-price {
-  font-size: 1.1rem;
-  font-weight: 600;
+.token-cell {
+  display: block;
+  padding: 0;
 }
 
+.token-cell.token-price,
 .token-cell .change {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  font-weight: 600;
+  font-size: 1rem;
+}
+
+.token-volume,
+.token-mcap {
   font-size: 0.9rem;
-}
-
-.token-cell.green .change {
-  background: rgba(0, 184, 148, 0.1);
-  color: #00b894;
-}
-
-.token-cell.red .change {
-  background: rgba(255, 71, 87, 0.1);
-  color: #ff4757;
-}
-
-.token-cell.token-price:hover span {
-  animation: pricePulse 0.5s ease;
-}
-
-@keyframes pricePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.sparkline-container {
-  width: 100px;
-  height: 40px;
-  margin-left: 1rem;
+  color: var(--text);
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
   .token-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.8rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    background: rgba(0, 184, 148, 0.05);
-    border-radius: 12px;
+    flex-direction: column;
+    align-items: flex-start;
   }
-
+  
   .token-cell {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
-  }
-
-  .token-info {
-    grid-column: 1 / -1;
     margin-bottom: 0.5rem;
   }
-
-  .token-logo {
-    width: 36px;
-    height: 36px;
-  }
-
-  .token-name {
-    font-size: 1rem;
-  }
-
-  .token-symbol {
-    font-size: 0.8rem;
-  }
-
-  .token-cell.token-price {
-    font-size: 1rem;
-  }
-
-  .token-cell .change {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
+  
+  .token-cell:nth-child(n+4) {
+    display: none;
   }
 }
 
@@ -839,6 +799,20 @@ body {
   }
 }
 
+.token-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .token-logo {
+    width: 24px; 
+    height: 24px;
+  }
+}
+
 #loading-screen {
   position: fixed;
   top: 0;
@@ -1010,4 +984,68 @@ body {
 .pagination-item:hover,
 .pagination-item.active {
   background: rgba(0, 184, 148, 0.2);
+}
+
+.token-profile {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--dark-bg);
+  border: 1px solid var(--secondary);
+  border-radius: 16px;
+  padding: 2rem;
+  z-index: 1000;
+  display: none;
+  max-width: 90%;
+  width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.token-profile.show {
+  display: block;
+}
+
+.token-profile .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.token-profile .token-logo {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+}
+
+.token-profile .token-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.token-profile .token-symbol {
+  font-size: 1.2rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
 }
