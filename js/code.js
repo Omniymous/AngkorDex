@@ -127,10 +127,17 @@ const loadTokenPage = async () => {
       const row = document.createElement('div');
       row.className = 'token-row';
       row.innerHTML = createTokenRow(token, idx);
+      row.setAttribute('data-token-id', token.id);
       tokenList.appendChild(row);
       renderSparkline(`sparkline-${token.id}`, token.sparkline_in_7d.price);
     });
     updatePagination();
+    document.querySelectorAll('.token-row').forEach(row => {
+      row.addEventListener('click', () => {
+        const tokenId = row.dataset.tokenId;
+        showTokenProfile(tokenId);
+      });
+    });
   } catch (error) {
     console.error('Error loading token page:', error);
   } finally {
@@ -172,12 +179,8 @@ const createTokenRow = (token, index) => {
         ${Math.abs(priceChange?.toFixed(2) || 0)}%
       </span>
     </div>
-    <div class="token-cell">
-      <span>Vol: $${(token.total_volume || 0).toLocaleString()}</span>
-    </div>
-    <div class="token-cell">
-      <span>MCap: $${(token.market_cap || 0).toLocaleString()}</span>
-    </div>
+    <div class="token-volume">Vol: $${(token.total_volume || 0).toLocaleString()}</div>
+    <div class="token-mcap">MCap: $${(token.market_cap || 0).toLocaleString()}</div>
   `;
 };
 const updateWatchlist = () => {
@@ -320,6 +323,7 @@ const searchTokens = query => {
     const row = document.createElement('div');
     row.className = 'token-row';
     row.innerHTML = createTokenRow(token, idx);
+    row.setAttribute('data-token-id', token.id);
     tokenList.appendChild(row);
     renderSparkline(`sparkline-${token.id}`, token.sparkline_in_7d.price);
   });
@@ -410,3 +414,25 @@ document.querySelectorAll('.nav-link').forEach(link => {
     switchSection(link.dataset.section);
   });
 });
+
+function showTokenProfile(tokenId) {
+  const token = allTokens.find(token => token.id === tokenId);
+  if (!token) return;
+
+  const profile = document.querySelector('.token-profile');
+  profile.querySelector('.token-logo').src = token.image;
+  profile.querySelector('.token-name').textContent = token.name;
+  profile.querySelector('.token-symbol').textContent = token.symbol.toUpperCase();
+  
+  profile.classList.add('show');
+  document.querySelector('.overlay').classList.add('show');
+}
+
+function hideTokenProfile() {
+  const profile = document.querySelector('.token-profile');
+  profile.classList.remove('show');
+  document.querySelector('.overlay').classList.remove('show');
+}
+
+document.querySelector('.token-profile .close-btn').addEventListener('click', hideTokenProfile);
+document.querySelector('.overlay').addEventListener('click', hideTokenProfile);
