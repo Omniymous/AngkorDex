@@ -74,7 +74,7 @@
   <div class="pagination"></div>
 </div>
 
-<section id="news-section" class="main">
+<section id="news-section" class="main" style="display: none;">
   <div class="news-feed">
     <h2>Curated News</h2>
     <div id="news-container"></div>
@@ -85,11 +85,6 @@
   <div class="loading-spinner" style="width: 20px; height: 20px;"></div>
   <span>Updating...</span>
 </div>
-
-<div class="footer">
-  Developed by <a href="#">Nicholas Chann</a>
-</div>
-
 <script>
 let starredTokens = JSON.parse(localStorage.getItem('starredTokens') || '[]');
 let PAGE_SIZE = 250;
