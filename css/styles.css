@@ -15,30 +15,6 @@
     font-family: 'Inter', sans-serif;
   }
 
-    .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: linear-gradient(90deg, #1a73e8, #d93025); /* Fancy gradient */
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 16px;
-            letter-spacing: 1px;
-            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.4);
-        }
-
-.footer a {
-            color: #00ffcc; /* Neon green for a crypto effect */
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
-
-.footer a:hover {
-            color: #fff;
-            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-        }
   body {
     background: var(--dark-bg);
     color: var(--text);
